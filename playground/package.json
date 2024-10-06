@@ -1,0 +1,14 @@
+{
+  "name": "playground",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "npx rsbuild dev",
+    "build": "npx rsbuild build"
+  },
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.25.7",
+    "@rsbuild/core": "^1.0.10",
+    "express": "^4.21.0"
+  }
+}
