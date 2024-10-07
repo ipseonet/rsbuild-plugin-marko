@@ -22,20 +22,10 @@ npm install -D
 @marko/webpack
 @rsbuild/core
 ```
+Install:
 
-
-Install: (Not yet uploaded to NPM)
-
-```bash
+```
 npm add rsbuild-plugin-marko -D
-```
-Plugin is not yet available on npm. Download from git and install as local:
-```
-git clone https://github.com/ipseonet/rsbuild-plugin-marko.git
-cd rsbuild-plugin-marko
-npm install /* may not need to install if /dist is available. */
-cd /path/to/your/project
-npm i /path/to/the/downloaded/rsbuild-plugin-marko -D
 ```
 
 ## MarkoPluginOptions
