@@ -1,7 +1,7 @@
 # rsbuild-plugin-marko (beta)
 
-An Rsbuild plugin to provide support for the Marko template engine. 
-The @marko/webpack/plugin did work with Rsbuild because of the specific requirements Rsbuild has for plugins and left the use of .server or .browser with the webpack plugin as undefined. 
+An Rsbuild plugin to provide support for the Marko template engine.  
+The @marko/webpack/plugin did work with Rsbuild because of the specific requirements Rsbuild has for plugins and left the use of .server or .browser with the webpack plugin as undefined.\
 This plugin is build using Rspack and incorporates the @marko/webpack/loader. Other built-in functions include babel and automatically using the plugin for server/browser so it only has to be included once. There is functionality for SSR and the plugin loads both server and browser versions of the plugin.
 
 <p>
@@ -31,8 +31,8 @@ npm add rsbuild-plugin-marko -D
 ## MarkoPluginOptions
 The runtimeID is handled automatically and the only one that is necessary is the isSSR boolean. isBrowser is also an Option but is handled by isSSR. isBrowser can be True and isSSR set to False for double safety. Both True do not conflict either.
 
-Recommended isSSR:
-True for Server Side Rendering
+###### Recommended isSSR:
+True for Server Side Rendering \
 False for Web App rendering
 ```
 MarkoPluginOptions {
@@ -109,9 +109,9 @@ After the plugin registration is completed, Rsbuild will automatically parse tem
 Example: first create a src/index.marko file, and include that file as your source.entry or import your marko components into your source.entry page:
 (the template marko file can be in any directory as long as source.entry properly imports them. The html.template is typically used for SSR.)
 
-*Note: Only tested success with .js/.mjs/.ts as source.entry files and the use of .marko as components only.
+* Note: Only tested success with .js/.mjs/.ts as source.entry files and the use of .marko as components only.
 
-SSR (Advanced) Must have middlewares setup.
+### SSR (Advanced) Must have middlewares setup.
 ```
 export default {
   environments: {
@@ -139,7 +139,7 @@ export default {
   },
 };
 ```
-#WEB ONLY (Standard)
+### WEB ONLY (Standard)
 ```
 import { defineConfig } from '@rsbuild/core';
 import { pluginMarko } from '../src';
@@ -186,14 +186,15 @@ Hello Marko!
 Success! Marko loaded! Click the button below:
 [Click me!]
 ```
-Playground is set up for testing purposed:
+### Playground is set up for testing purposes:
 ```
 cd playground
 npm install
 npm run dev
 ```
 Whispers of SSR things are in the repository to challenge its use. 
-##Jesus Christ is Lord, Hallelujah!
-## License
+
+## Jesus Christ is Lord, Hallelujah!
+#### License
 
 [MIT](./LICENSE).
