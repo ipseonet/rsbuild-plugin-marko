@@ -1,0 +1,77 @@
+{
+  "name": "rsbuild-plugin-marko",
+  "version": "2.1.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ipseonet/rsbuild-plugin-marko.git"
+  },
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "biome check .",
+    "lint:write": "biome check . --write",
+    "prepare": "npm run build"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx nano-staged"
+  },
+  "nano-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs,marko}": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "@rspack/core": "^1.0.5",
+    "@types/node": "^20.16.2",
+    "nano-staged": "^0.8.0",
+    "simple-git-hooks": "^2.11.1",
+    "ts-node": "^10.9.2"
+  },
+  "peerDependenciesMeta": {
+    "@rsbuild/core": {
+      "optional": true
+    }
+  },
+  "packageManager": "pnpm@9.9.0",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.25.4",
+    "@marko/compiler": "^5.37.17",
+    "@marko/webpack": "^10.0.0",
+    "@rsbuild/core": "^1.0.10",
+    "marko": "^5.35.14",
+    "tsup": "^8.3.0"
+  },
+  "description": "Plugin (beta) for rendering and using .marko in rsbuild.",
+  "keywords": [
+    "rsbuild",
+    "plugin",
+    "marko",
+    "js",
+    "webpack"
+  ],
+  "author": "Ricardo J",
+  "bugs": {
+    "url": "https://github.com/ipseonet/rsbuild-plugin-marko/issues"
+  },
+  "homepage": "https://github.com/ipseonet/rsbuild-plugin-marko#readme"
+}
