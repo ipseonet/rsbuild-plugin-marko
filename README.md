@@ -1,4 +1,4 @@
-**# rsbuild-plugin-marko (beta)
+# rsbuild-plugin-marko (beta)
 
 An Rsbuild plugin to provide support for the Marko template engine.  
 The @marko/webpack/plugin did work with Rsbuild because of the specific requirements Rsbuild has for plugins and left the use of .server or .browser with the webpack plugin as undefined.\
