@@ -19,7 +19,7 @@ async function startDevServer() {
         }
     });
 
-    app.use('/', routes)
+    // app.use('/', routes)
     app.use(rsbuildServer.middlewares);
     app.use(markoExpress());
 

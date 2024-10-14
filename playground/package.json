@@ -4,7 +4,10 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "npx rsbuild dev",
-    "build": "npx rsbuild build"
+    "build": "npx rsbuild build",
+    "serve:node": "node ./src/server.mjs --outDir dist/server",
+    "dev:inspect": "node --inspect --enable-source-maps src/server.mjs",
+    "start": "node --enable-source-maps ./src/server.mjs"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.25.7",
