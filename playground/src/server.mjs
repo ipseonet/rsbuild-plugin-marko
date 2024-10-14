@@ -1,7 +1,7 @@
 import express from 'express';
 import { createRsbuild, loadConfig } from '@rsbuild/core';
 import markoExpress from '@marko/express'
-import routes from './config/routes.js';
+// import routes from './config/routes.js';
 
 const CLIENT_PORT = 8000; // Port for the client-side application
 const SERVER_PORT = 4000; // Port for the server-side API
