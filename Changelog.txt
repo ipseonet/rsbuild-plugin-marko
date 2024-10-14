@@ -1,0 +1,19 @@
+October 13, 2024
+
+Improved types inside the plugin tool.
+Added another example for client side.
+Paths inside of the plugin tool resolve accordingly.
+Both environments now load correctly.
+
+There is no support yet for server rendering of .marko pages when using node ./server.mjs/.js
+A custom loader has to be made to bypass the default esm node loader if using node as the server. Others may be possible but are untested.
+
+The plugin lets you use the client side as marko templates rendering with JS
+ Use 'npm run dev' to edit.
+
+ Server side can load rsbuild config (example in playground) with
+   'node ./your/server.mjs/.js'
+ but can only use the files with extensions that node initially allows.
+ In theory, one should be able to create marko templates on client side and use them on the server side.
+
+The loader problem is similar to why consolidate dropped support for marko, but the plugin works for client side.
