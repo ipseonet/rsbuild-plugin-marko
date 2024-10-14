@@ -1,6 +1,6 @@
 {
   "name": "rsbuild-plugin-marko",
-  "version": "2.1.1",
+  "version": "2.2.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ipseonet/rsbuild-plugin-marko.git"

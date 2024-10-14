@@ -1,0 +1,49 @@
+[
+  {
+    "title": "Guides",
+    "docs": [
+      "Installing",
+      "Getting started",
+      "Conditionals and lists",
+      "Custom tags",
+      "State",
+      "Styles",
+      "Events",
+      "Body content",
+      "TypeScript",
+      "Marko 5 upgrade",
+      "Troubleshooting Streaming"
+    ]
+  },
+  {
+    "title": "Tutorials",
+    "docs": ["Color Picker"]
+  },
+  {
+    "title": "Reference",
+    "docs": [
+      "Rendering",
+      "Syntax",
+      "Core tags",
+      "Class components",
+      "marko.json",
+      "Compiler"
+    ]
+  },
+  {
+    "title": "Bundler Integrations",
+    "docs": ["Vite", "Webpack", "Rollup", "Lasso"]
+  },
+  {
+    "title": "Server Integrations",
+    "docs": ["Cloudflare Workers", "Express", "Fastify", "Koa", "HTTP"]
+  },
+  {
+    "title": "Tooling",
+    "docs": ["Editor plugins"]
+  },
+  {
+    "title": "Articles",
+    "docs": ["Marko vs React", "Why is Marko Fast", "10 Awesome Marko Features"]
+  }
+]

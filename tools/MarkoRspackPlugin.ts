@@ -1,10 +1,20 @@
-import { join } from 'node:path';
+import path from 'node:path';
 import {
-  type Compiler,
   type Configuration,
 } from '@rspack/core';
-import { Compilation } from '@rspack/core'
-import {sources} from '@rspack/core';
+
+import { type Compiler as CompilerType } from '@rspack/core';
+// import compilerPkg from '@rspack/core'
+// const {Compiler} = compilerPkg;
+
+import { type Compilation as CompilationType } from '@rspack/core';
+
+import compPkg from '@rspack/core'
+const {Compilation} = compPkg;
+
+import pkg from '@rspack/core';
+const { sources } = pkg;
+
 import moduleName from '../helpers/module-name';
 import {RsbuildPlugin} from "@rsbuild/core";
 
@@ -38,8 +48,8 @@ export default class MarkoRspackPlugin {
     markoCompileCache: Map<unknown, unknown>;
     markoVirtualSources: Map<string, { code: string | Buffer; map?: any }>;
   };
-  private serverCompiler: Compiler | null = null;
-  private browserCompilers: Compiler[] = [];
+  private serverCompiler: CompilerType | null = null;
+  private browserCompilers: CompilerType[] = [];
   private clientEntries: { [x: string]: string } = {};
   private clientAssets: {
     [buildName: string]: {
@@ -61,7 +71,7 @@ export default class MarkoRspackPlugin {
     }
   }
 
-  browserApply(compiler: Compiler) {
+  browserApply(compiler: CompilerType) {
     this.browserCompilers.push(compiler);
     this.applyBrowser(compiler);
     this.setupRules(compiler);
@@ -70,7 +80,7 @@ export default class MarkoRspackPlugin {
     compiler.options.entry = this.getEntryPoints(compiler);
 
   }
-  serverApply(compiler: Compiler) {
+  serverApply(compiler: CompilerType) {
     this.serverCompiler = compiler;
     this.applyServer(compiler);
     this.setupRules(compiler);
@@ -84,7 +94,7 @@ export default class MarkoRspackPlugin {
         this.rsbuildApi = api;
     }
 
-    private getEntryPoints(compiler: Compiler): Configuration['entry'] {
+    private getEntryPoints(compiler: CompilerType): Configuration['entry'] {
         const rsbuildConfig = this.rsbuildApi.getRsbuildConfig();
         const environments = rsbuildConfig.environments || {};
         const source = rsbuildConfig.source || {};
@@ -112,19 +122,18 @@ export default class MarkoRspackPlugin {
         }
     }
 
-  private setupRules(compiler: Compiler) {
+  private setupRules(compiler: CompilerType) {
     const {isBrowser} = this.options;
-
 
     compiler.options.module.rules.push(
         {
           test: /\.marko$/,
-          type: 'javascript/auto',
+          type: 'assets',
           use: [
             {
-              loader: join(__dirname, '../node_modules', '@marko/webpack/loader'),
+              loader: path.resolve(process.cwd(), 'node_modules/@marko/webpack/loader'),
               options: {
-                compiler: join(__dirname, '../node_modules', '@marko/compiler'),
+                compiler: path.resolve(process.cwd(), 'node_modules/@marko/compiler'),
                 hydrateIncludeImports: /\.\w+(?<![cm]?js|json|wasm|marko)$/,
                 babelConfig: {
                   presets: [
@@ -159,17 +168,34 @@ export default class MarkoRspackPlugin {
           test: /\.(jpg|jpeg|gif|png|svg|)$/,
           type: 'asset',
         },
+        {
+          test: /\.(marko|js|mjs|ts)$/,
+          type: 'javascript/auto',
+          use: (info) => {
+            const loaders = [];
+
+            // @ts-ignore
+            if (info.resource.endsWith('.ts')) {
+              loaders.push({
+                loader: 'ts-loader',
+                options: {
+                  transpileOnly: true,
+                },
+              });
+            }
+            return loaders;
+          },
+        },
     )
   }
 
-
-  private applyServer(compiler: Compiler) {
+  private applyServer(compiler: CompilerType) {
     (compiler as any).markoEntriesPending = this.createDeferredPromise<void>();
     this.serverCompiler = compiler;
 
     compiler.hooks.thisCompilation.tap(
       'MarkoRspackServer',
-      (compilation: Compilation) => {
+      (compilation: CompilationType) => {
         if (!this.options.runtimeId && compilation.outputOptions.uniqueName) {
           this.options.runtimeId = this.normalizeRuntimeId(
             compilation.outputOptions.uniqueName,
@@ -178,7 +204,7 @@ export default class MarkoRspackPlugin {
 
         compilation.hooks.finishModules.tap(
           'MarkoRspackServer:finishModules',
-          (modules) => {
+          (modules: any) => {
             let hasChangedEntries = false;
             const removedEntryIds = new Set(Object.keys(this.clientEntries));
 
@@ -230,7 +256,7 @@ export default class MarkoRspackPlugin {
               }
 
               for (const file of chunk.files) {
-                compilation.updateAsset(file, (old: sources.Source) => {
+                compilation.updateAsset(file, (old: compPkg.sources.Source) => {
                   const placeholder = 'MARKO_MANIFEST_PLACEHOLDER';
                   const placeholderPosition = old
                     .source()
@@ -262,6 +288,7 @@ export default class MarkoRspackPlugin {
             build: ${JSON.stringify(defaultBuild)}
           }`;
 
+
                     const newSource = new sources.ReplaceSource(old);
                     newSource.replace(
                       placeholderPosition,
@@ -283,7 +310,7 @@ export default class MarkoRspackPlugin {
     );
   }
 
-  private applyBrowser(compiler: Compiler) {
+  private applyBrowser(compiler: CompilerType) {
     const compilerName = compiler.options.name || 'default';
     const entryOption = compiler.options.entry;
     this.browserCompilers.push(compiler);
@@ -313,7 +340,7 @@ export default class MarkoRspackPlugin {
 
     compiler.hooks.make.tap(
       'MarkoRspackBrowser',
-      (compilation: Compilation) => {
+      (compilation: CompilationType) => {
         const pendingAssets = this.createDeferredPromise<void>();
         (compiler as any).markoAssetsPending = pendingAssets;
 
