@@ -3,3 +3,5 @@
 /.idea/
 /src/marko-loader.mjs
 /playground/node_modules/
+package-lock.json
+/playground/package-lock.json

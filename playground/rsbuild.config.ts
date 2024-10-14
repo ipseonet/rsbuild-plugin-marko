@@ -1,5 +1,5 @@
 import { defineConfig } from '@rsbuild/core';
-import { pluginMarko } from '../src';
+import { pluginMarko } from 'rsbuild-plugin-marko';
 
 export default defineConfig({
   plugins: [
@@ -7,7 +7,8 @@ export default defineConfig({
   ],
   tools: {
     rspack: {
-      externals: ['express'],
+      //important for compile to not use these. Compile warnings appear if these are not excluded from compile.
+      externals: ['express', 'fsevents', 'yaml', 'tsx/cjs/api', '@rsbuild/core'],
     },
   },
   environments: {
